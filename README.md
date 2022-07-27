@@ -1,4 +1,8 @@
 # Docker_CI-CD
+
+<a href="https://www.youtube.com/watch?v=nLIFdDiyX7s" target="_blank" >watch a short intro for this project</a>
+
+
 <p>
 <img src="https://img.shields.io/badge/Terraform-starter-lightgrey" height="25">
 <img src="https://img.shields.io/badge/azure-devops-yellowgreen" height="25">
@@ -6,20 +10,12 @@
 
 
 
-This week’s project consists on writing a Dockerfile to package the NodeWeightTracker application
 
-**Weight Tracker application into a Docker Container on a load balancer spinning staging and production virtual machines with <b>full CI CD automation.</b>**
-</br>
 
-<p>
-<img src="https://bootcamp.rhinops.io/images/docker-cicd.png" height="300">
-<img src="https://bootcamp.rhinops.io/images/branch-policy.png" height="300">
-<br/>
 
-## Project Overview:
 
-watch a short intro for this project:
-https://www.youtube.com/watch?v=nLIFdDiyX7s
+
+
 
 # How to use this repository?
 - connect files preferably to Azure Devops (you can also use a private github repo)
@@ -83,6 +79,16 @@ make sure you update the correct values in the azure devops library:
 - staging - the postgres db name - look it up in the azure portal.
 - production - the host url should contain a new ip
 - production - the postgres db name - look it up in the azure portal.
+
+This week’s project consists on writing a Dockerfile to package the NodeWeightTracker application
+
+**Weight Tracker application into a Docker Container on a load balancer spinning staging and production virtual machines with <b>full CI CD automation.</b>**
+</br>
+
+<p>
+<img src="https://bootcamp.rhinops.io/images/docker-cicd.png" height="300">
+<img src="https://bootcamp.rhinops.io/images/branch-policy.png" height="300">
+<br/>
 
 will run over the required steps tp install application configuration over your server fleet.
 I hope you enjoy the experience.
