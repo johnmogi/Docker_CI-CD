@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    hostname: postgres
+    container_name: postgres
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      -  ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: ${PGUSERNAME}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: postgres
+
+  web:
+      container_name: weightapp
+      image: weightapprepo.azurecr.io/weightapprepo:${tag}
+      restart: always
+        - '8080:8080'
+      depends_on: 
+       - postgres
+      environment:
+        NODE_ENV: development
+        PGPORT: 5432
+        HOST: ${HOST} 
+        PORT: ${PORT} 
+        PGHOST: ${PGHOST} 
+        PGUSERNAME: ${PGUSERNAME} 
+        PGDATABASE: ${PGDATABASE} 
+        PGPASSWORD: ${PGPASSWORD} 
+        COOKIE_ENCRYPT_PWD: ${COOKIE_ENCRYPT_PWD} 
+        OKTA_ORG_URL: ${OKTA_ORG_URL} 
+        OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+        OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET} 

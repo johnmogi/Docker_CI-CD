@@ -1,0 +1,117 @@
+trigger:
+  - master
+  - feature/*
+variables:
+  tag: "$(Build.BuildId)"
+pool:
+  vmImage: ubuntu-latest
+stages:
+  # Building and sending files to azure resistery
+  - stage: prepare_CI
+    jobs:
+      - job: CI
+        workspace:
+          clean: all
+
+        steps:
+          - task: Docker@2 ## Connecting to acr
+            inputs:
+              containerRegistry: "weightapprepo.azurecr.io"
+              command: "login"
+          - task: Docker@2
+            inputs:
+              containerRegistry: "weightapprepo.azurecr.io"
+              repository: "weightapprepo"
+              command: "buildAndPush"
+              Dockerfile: "**/Dockerfile"
+              tags: $(tag)
+
+          # - task: PublishBuildArtifacts@1
+          #   inputs:
+          #     PathtoPublish: "dockerfiles/docker-compose.yml"
+          #     ArtifactName: "drop"
+          #     publishLocation: "Container"
+
+  # Continuous Integration Process
+  - stage: CI_to_staging
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    variables:
+      - group: staging
+    jobs:
+      - deployment: staging
+        displayName: Deploy to Staging
+        environment:
+          name: staging
+          resourceType: VirtualMachine
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      sudo apt update
+                      sudo apt upgrade -y
+                      sudo apt install docker.io -y
+                      sudo chmod 666 /var/run/docker.sock
+                  displayName: install docker
+
+                - task: Docker@2
+                  inputs:
+                    containerRegistry: "weightapprepo.azurecr.io"
+                    command: "login"
+
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      docker rmi -f $(docker images -a -q)
+                      docker rm -f $(docker ps -a -q)
+                      docker pull weightapprepo.azurecr.io/weightapprepo:$(Build.BuildId)
+
+                  displayName: clean and repull docker image.
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      docker run -d -p 8080:8080  --restart=always --name weightapp -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDATABASE) -e PGPASSWORD=$(PGPASSWORD) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTA_ORG_URL) -e OKTA_CLIENT_ID=$(OKTA_CLIENT_ID) -e OKTA_CLIENT_SECRET=$(OKTA_CLIENT_SECRET) weightapprepo.azurecr.io/weightapprepo:$(Build.BuildId)
+                  displayName: docker run and restart
+
+  # Continuous Delivery Process into production (requires manual approval and a feature branch merge)
+  - stage: CD_to_production
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    variables:
+      - group: production
+    jobs:
+      - deployment: production
+        displayName: Deploy to production
+        environment:
+          name: production
+          resourceType: VirtualMachine
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      sudo apt update
+                      sudo apt upgrade -y
+                      sudo apt install docker.io -y
+                      sudo chmod 666 /var/run/docker.sock
+                  displayName: install docker
+
+                - task: Docker@2
+                  inputs:
+                    containerRegistry: "weightapprepo.azurecr.io"
+                    command: "login"
+
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      docker rmi -f $(docker images -a -q)
+                      docker rm -f $(docker ps -a -q)
+                      docker pull weightapprepo.azurecr.io/weightapprepo:$(Build.BuildId)
+                - task: CmdLine@2
+                  inputs:
+                    script: |
+                      docker run -d -p 8080:8080  --restart=always --name weightapp -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDATABASE) -e PGPASSWORD=$(PGPASSWORD) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTA_ORG_URL) -e OKTA_CLIENT_ID=$(OKTA_CLIENT_ID) -e OKTA_CLIENT_SECRET=$(OKTA_CLIENT_SECRET) weightapprepo.azurecr.io/weightapprepo:$(Build.BuildId)
+                  displayName: docker run and restart

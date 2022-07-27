@@ -1,0 +1,21 @@
+- task: CmdLine@2
+  inputs:
+    script: |
+      sudo apt update
+      sudo apt upgrade -y
+      sudo apt install docker.io -y
+      sudo chmod 666 /var/run/docker.sock
+  displayName: install docker
+
+- task: Docker@2
+  inputs:
+    containerRegistry: "weightapprepo.azurecr.io"
+    command: "login"
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      docker rmi -f $(docker images -a -q)
+      docker rm -f $(docker ps -a -q)
+      docker pull weightapprepo.azurecr.io/weightapprepo:$(Build.BuildId)
+  displayName: clean and repull docker image.
