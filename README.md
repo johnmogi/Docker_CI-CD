@@ -1,9 +1,32 @@
-# CICD_pipeline2_ci_ansible
+# Docker_CI-CD
 
 ## Project Overview:
 
 watch a short intro for this project:
 https://www.youtube.com/watch?v=nLIFdDiyX7s
+
+# How to use this repository?
+- connect files preferably to Azure Devops (you can also use a private github repo)
+- open up a new pipeline, the azure-pipelines.yml file will gets picked up automatically.
+if not, make sure it does.
+- in the pipeline section go over to library and add 2 variable groups:
++ staging
++ production
+for each group add the following key value vars:
+* PORT=""
+* HOST=""
+* NODE_ENV=""
+* HOST_URL=""
+* COOKIE_ENCRYPT_PWD=""
+* OKTA_ORG_URL=""
+* OKTA_CLIENT_ID=""
+* OKTA_CLIENT_SECRET=""
+* PGHOST=""
+* PGUSERNAME=""
+* PGDATABASE=""
+* PGPASSWORD=""
+* PGPORT=""
+
 
 <p>
 <img src="https://img.shields.io/badge/Terraform-starter-lightgrey" height="25">
