@@ -1,4 +1,22 @@
 # Docker_CI-CD
+<p>
+<img src="https://img.shields.io/badge/Terraform-starter-lightgrey" height="25">
+<img src="https://img.shields.io/badge/azure-devops-yellowgreen" height="25">
+<img src="https://img.shields.io/badge/docker-pro-green" height="25">
+
+my Devops journey (hand drawn by me) :
+
+<center><img src="https://raw.githubusercontent.com/johnmogi/password/main/my_devops.jpg" height="400"></center>
+
+This week’s project consists on writing a Dockerfile to package the NodeWeightTracker application
+
+**Weight Tracker application into a Docker Container on a load balancer spinning staging and production virtual machines with <b>full CI CD automation.</b>**
+</br>
+
+<p>
+<img src="https://bootcamp.rhinops.io/images/docker-cicd.png" height="300">
+<img src="https://bootcamp.rhinops.io/images/branch-policy.png" height="300">
+<br/>
 
 ## Project Overview:
 
@@ -28,24 +46,6 @@ for each group add the following key value vars:
 * PGPORT=""
 
 
-<p>
-<img src="https://img.shields.io/badge/Terraform-starter-lightgrey" height="25">
-<img src="https://img.shields.io/badge/azure-devops-yellowgreen" height="25">
-<img src="https://img.shields.io/badge/docker-pro-green" height="25">
-
-my Devops journey (hand drawn by me) :
-
-<center><img src="https://raw.githubusercontent.com/johnmogi/password/main/my_devops.jpg" height="400"></center>
-
-This week’s project consists on writing a Dockerfile to package the NodeWeightTracker application
-
-**Weight Tracker application into a Docker Container on a load balancer spinning staging and production virtual machines with <b>full CI CD automation.</b>**
-</br>
-
-<p>
-<img src="https://bootcamp.rhinops.io/images/docker-cicd.png" height="300">
-<img src="https://bootcamp.rhinops.io/images/branch-policy.png" height="300">
-<br/>
 ## The Necessary Steps
 
 - **Terraform- build 2 enviroments, load balance and postgres db : [preview](https://github.com/johnmogi/CICD_pipeline1_terraform_build) .**
