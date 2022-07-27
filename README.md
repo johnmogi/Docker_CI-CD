@@ -1,18 +1,20 @@
-# Docker_CI-CD
+# Docker CI CD
 
 <a href="https://www.youtube.com/watch?v=nLIFdDiyX7s" target="_blank" >watch a short intro for this project</a>
 
+# info
+this project deploys the weight app application using a docker container and a postgreSql database on azure cloud.<br/>
+however in this specific project we utilize Azure Devops pipelines to:
+<br/>
+CI - by commiting into the master branch the application will auto deploy into the staging enviroment.<br/>
+
+CD - after completeing a feature development and merging a pull request <br/>an additional manual approval stage will auto deliver the application into the production enviroment.
 
 <p>
 <img src="https://img.shields.io/badge/Terraform-starter-lightgrey" height="25">
 <img src="https://img.shields.io/badge/azure-devops-yellowgreen" height="25">
 <img src="https://img.shields.io/badge/docker-pro-green" height="25">
-
-
-
-
-
-
+</p>
 
 
 
