@@ -4,9 +4,7 @@
 <img src="https://img.shields.io/badge/azure-devops-yellowgreen" height="25">
 <img src="https://img.shields.io/badge/docker-pro-green" height="25">
 
-my Devops journey (hand drawn by me) :
 
-<center><img src="https://raw.githubusercontent.com/johnmogi/password/main/my_devops.jpg" height="400"></center>
 
 This week’s project consists on writing a Dockerfile to package the NodeWeightTracker application
 
@@ -90,4 +88,7 @@ will run over the required steps tp install application configuration over your 
 I hope you enjoy the experience.
 
 renamed master to main then back again (:
-# Docker_CI-CD
+
+my Devops journey (hand drawn by me) :
+
+<center><img src="https://raw.githubusercontent.com/johnmogi/password/main/my_devops.jpg" height="400"></center>
